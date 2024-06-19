@@ -5,6 +5,7 @@ namespace App\Providers;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -31,5 +32,6 @@ class AppServiceProvider extends ServiceProvider
                 ->extremePaginationLinks()
                 ->defaultSort('created_at', 'desc');
         });
+        Model::unguard();
     }
 }
