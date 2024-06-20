@@ -33,5 +33,17 @@ class AppServiceProvider extends ServiceProvider
                 ->defaultSort('created_at', 'desc');
         });
         Model::unguard();
+
+        \BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch::configureUsing(
+            function (\BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch $switch) 
+            {
+                $switch->locales(['en','fr','vi'])
+                    ->flags([
+                        'fr' => asset('/images/flags/france.png'),
+                        'en' => asset('/images/flags/united-kingdom.png'),
+                        'vi' => asset('/images/flags/vietnam.png'),
+                    ]); // also accepts a closure
+            }
+        );
     }
 }

@@ -152,7 +152,7 @@ class ProductResource extends Resource
                                     ->multiple()
                                     ->createOptionForm([
                                         Section::make()->schema([
-                                            Select::make('type')
+                                            Select::make('option_id')
                                                 ->options(Option::query()->pluck('name','id'))
                                                 ->required()
                                                 ->columnSpan(2),

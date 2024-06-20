@@ -18,7 +18,7 @@ class Product extends Model
     ];
 
     public function categories(): BelongsToMany {
-        return $this->BelongsToMany(ProductCategory::class);
+        return $this->belongsToMany(ProductCategory::class, 'pivot_product_category', 'product_id', 'category_id');
     }
 
     public function brand(): BelongsTo {

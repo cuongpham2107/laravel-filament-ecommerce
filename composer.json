@@ -19,7 +19,10 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "archilex/filament-toggle-icon-column": "*",
+        "aymanalhattami/filament-context-menu": "^1.0",
         "bezhansalleh/filament-exceptions": "^2.1",
+        "bezhansalleh/filament-language-switch": "^3.1",
         "bezhansalleh/filament-shield": "^3.2",
         "codeat3/blade-fluentui-system-icons": "^1.32",
         "filament/filament": "^3.2",
@@ -35,6 +38,8 @@
         "psr/simple-cache": "^2.0",
         "pxlrbt/filament-excel": "^2.3",
         "riodwanto/filament-ace-editor": "^1.0",
+        "saade/filament-fullcalendar": "^3.0",
+        "solution-forest/filament-tree": "^2.0",
         "z3d0x/filament-logger": "^0.6.3"
     },
     "require-dev": {

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Shop;
 use App\Filament\Resources\Shop\CategoryResource\Pages;
 use App\Filament\Resources\Shop\CategoryResource\RelationManagers;
 use App\Models\Shop\ProductCategory;
+use Archilex\ToggleIconColumn\Columns\ToggleIconColumn;
 use Filament\Forms;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
@@ -15,6 +16,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
@@ -22,7 +24,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 
+
 use Illuminate\Support\Str;
+
 
 class CategoryResource extends Resource
 {
@@ -44,7 +48,7 @@ class CategoryResource extends Resource
                         ->schema([
                             TextInput::make('name')
                                 ->live(onBlur: true)
-                                ->unique()
+                                // ->unique()
                                 ->required()
                                 ->afterStateUpdated(
                                     function (
@@ -70,20 +74,22 @@ class CategoryResource extends Resource
                 ])->columnSpan(2),
                 Group::make()->schema([
                     Section::make('Status')->schema([
+                        TextInput::make('order_id')
+                            ->numeric(),
                         Toggle::make('is_visible')
                             ->label('Visible')
                             ->helperText('Enable or disable product visibilty')
                             ->default(true)
-                            ->onIcon('heroicon-m-check')
-                            ->offIcon('heroicon-m-x-mark'),
+                            ->onIcon('heroicon-m-eye')
+                            ->offIcon('heroicon-m-eye-slash'),
                         
                     ]),
                     Section::make('Association')->schema([
                         Select::make('parent_id')
                             ->relationship('parent','name')
-                            ->multiple()
-                            ->searchable('name')
-                            ->reactive()
+                            ->reactive(),
+                           
+                                    
                     ])
                 ]),
                
@@ -99,10 +105,11 @@ class CategoryResource extends Resource
                     ->searchable(),
                 TextColumn::make('slug'),
                 TextColumn::make('parent.name'),
-                IconColumn::make('is_visible')
+                ToggleIconColumn::make('is_visible')
                     ->label('Visibilty')
-                    ->boolean()
-                    ->toggleable(isToggledHiddenByDefault: false),
+                    // ->toggleable(isToggledHiddenByDefault: false)
+                    ->onIcon('heroicon-m-eye')
+                    ->offIcon('heroicon-m-eye-slash'),
             ])
             ->filters([
                 //
@@ -130,8 +137,9 @@ class CategoryResource extends Resource
     {
         return [
             'index' => Pages\ListCategories::route('/'),
-            // 'create' => Pages\CreateCategory::route('/create'),
-            // 'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'tree-list' => Pages\ProductCategoryTree::route('/tree-list'),
+            'create' => Pages\CreateCategory::route('/create'),
+            'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
     }
 }
